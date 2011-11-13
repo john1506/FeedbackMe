@@ -16,7 +16,7 @@
                            Text="{Binding Path=Strings.HomePageTitle, Source={StaticResource ApplicationResources}}" Margin="0,0,0,5"/>
                 <TextBlock FontSize="18" FontFamily="Portable User Interface" Text="Welcome" Margin="0,0,0,10"/>
                 <TextBlock Text="Please Select the module you would like to leave Feedback for" FontFamily="Portable User Interface"/>
-                <ComboBox HorizontalAlignment="left" Margin="350,-18,0,0" Height="23" Name="moduleBox" Width="120" />
+                <ComboBox HorizontalAlignment="left" Margin="350,-18,0,0" Height="23" Name="moduleBox" Width="120" ItemsSource="{Binding}" />
             </StackPanel>
 
         </ScrollViewer>

@@ -35,7 +35,7 @@
         <Slider Grid.Row="2" Grid.Column="2" Height="23" HorizontalAlignment="Left" Name="slider1" VerticalAlignment="Top" Width="100" ValueChanged="slider1_ValueChanged" SmallChange="1" />
         <sdk:Label Content="Quality of the Lecture" Grid.ColumnSpan="2" Grid.Row="2" Margin="50,0,0,0" />
         <sdk:Label Content="Comments" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" />
-        <TextBox BorderThickness="1" BorderBrush="Black" Grid.Row="4" Grid.RowSpan="6" Grid.Column="2" Grid.ColumnSpan="2" AcceptsReturn="True" Margin="0,0,50,0" />
+        <TextBox Name="fbox" BorderThickness="1" BorderBrush="Black" Grid.Row="4" Grid.RowSpan="6" Grid.Column="2" Grid.ColumnSpan="2" AcceptsReturn="True" Margin="0,0,50,0" />
         <Button Content="Submit" Name="submitBtn" Click="submitBtn_Click" Grid.Row="12" Height="25" Grid.Column="3" Width="75" HorizontalAlignment="Right" Margin="0,24,59,0" Grid.RowSpan="2" />
     </Grid>
 </navigation:Page>

@@ -30,5 +30,67 @@ namespace Feedb.Views
 
         }
 
+        private void feedbackDomainDataSource_LoadedData(object sender, System.Windows.Controls.LoadedDataEventArgs e)
+        {
+
+            if (e.HasError)
+            {
+                System.Windows.MessageBox.Show(e.Error.ToString(), "Load Error", System.Windows.MessageBoxButton.OK);
+                e.MarkErrorAsHandled();
+            }
+        }
+
+        private void sBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox sb = (ComboBox)sender;
+            int s = sb.SelectedIndex;
+            try
+            {
+                switch (s)
+                {
+                    case -1:
+                        {
+                            dp.Visibility = System.Windows.Visibility.Visible;
+                            query.Visibility = System.Windows.Visibility.Collapsed;
+                            break;
+                        }
+                    case 0:
+                        {
+                            dp.Visibility = System.Windows.Visibility.Visible;
+                            query.Visibility = System.Windows.Visibility.Collapsed;
+                            break;
+                        }
+                    case 1:
+                        {
+                            dp.Visibility = System.Windows.Visibility.Collapsed;
+                            query.Visibility = System.Windows.Visibility.Visible;
+                            break;
+                        }
+                    case 2:
+                        {
+                            dp.Visibility = System.Windows.Visibility.Collapsed;
+                            query.Visibility = System.Windows.Visibility.Visible;
+                            break;
+                        }
+                    case 3:
+                        {
+                            dp.Visibility = System.Windows.Visibility.Collapsed;
+                            query.Visibility = System.Windows.Visibility.Visible;
+                            break;
+                        }
+                    default:
+                        {
+                            dp.Visibility = System.Windows.Visibility.Visible;
+                            query.Visibility = System.Windows.Visibility.Collapsed;
+                            break;
+                        }
+                }
+            }
+            catch (Exception)
+            {
+
+
+            }
+        }  
     }
 }

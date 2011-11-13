@@ -90,6 +90,7 @@ namespace Feedb.Web
     using System.ServiceModel.DomainServices.Client;
     using System.ServiceModel.DomainServices.Client.ApplicationServices;
     using System.ServiceModel.Web;
+    using System.Xml.Serialization;
     using Feedb.Web.Resources;
     
     
@@ -311,6 +312,1003 @@ namespace Feedb.Web
     }
     
     /// <summary>
+    /// The DomainContext corresponding to the 'fbs' DomainService.
+    /// </summary>
+    public sealed partial class fbs : DomainContext
+    {
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="fbs"/> class.
+        /// </summary>
+        public fbs() : 
+                this(new WebDomainClient<IfbsContract>(new Uri("Feedb-Web-fbs.svc", UriKind.Relative)))
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="fbs"/> class with the specified service URI.
+        /// </summary>
+        /// <param name="serviceUri">The fbs service URI.</param>
+        public fbs(Uri serviceUri) : 
+                this(new WebDomainClient<IfbsContract>(serviceUri))
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="fbs"/> class with the specified <paramref name="domainClient"/>.
+        /// </summary>
+        /// <param name="domainClient">The DomainClient instance to use for this DomainContext.</param>
+        public fbs(DomainClient domainClient) : 
+                base(domainClient)
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="feedback"/> entity instances that have been loaded into this <see cref="fbs"/> instance.
+        /// </summary>
+        public EntitySet<feedback> feedbacks
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<feedback>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="Lecturer"/> entity instances that have been loaded into this <see cref="fbs"/> instance.
+        /// </summary>
+        public EntitySet<Lecturer> Lecturers
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<Lecturer>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="module"/> entity instances that have been loaded into this <see cref="fbs"/> instance.
+        /// </summary>
+        public EntitySet<module> modules
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<module>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="student"/> entity instances that have been loaded into this <see cref="fbs"/> instance.
+        /// </summary>
+        public EntitySet<student> students
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<student>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="user"/> entity instances that have been loaded into this <see cref="fbs"/> instance.
+        /// </summary>
+        public EntitySet<user> users
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<user>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="feedback"/> entity instances using the 'GetFeedbacks' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="feedback"/> entity instances.</returns>
+        public EntityQuery<feedback> GetFeedbacksQuery()
+        {
+            this.ValidateMethod("GetFeedbacksQuery", null);
+            return base.CreateQuery<feedback>("GetFeedbacks", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="Lecturer"/> entity instances using the 'GetLecturers' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="Lecturer"/> entity instances.</returns>
+        public EntityQuery<Lecturer> GetLecturersQuery()
+        {
+            this.ValidateMethod("GetLecturersQuery", null);
+            return base.CreateQuery<Lecturer>("GetLecturers", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="module"/> entity instances using the 'GetModules' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="module"/> entity instances.</returns>
+        public EntityQuery<module> GetModulesQuery()
+        {
+            this.ValidateMethod("GetModulesQuery", null);
+            return base.CreateQuery<module>("GetModules", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="student"/> entity instances using the 'GetStudents' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="student"/> entity instances.</returns>
+        public EntityQuery<student> GetStudentsQuery()
+        {
+            this.ValidateMethod("GetStudentsQuery", null);
+            return base.CreateQuery<student>("GetStudents", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="user"/> entity instances using the 'GetUsers' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="user"/> entity instances.</returns>
+        public EntityQuery<user> GetUsersQuery()
+        {
+            this.ValidateMethod("GetUsersQuery", null);
+            return base.CreateQuery<user>("GetUsers", null, false, true);
+        }
+        
+        /// <summary>
+        /// Creates a new EntityContainer for this DomainContext's EntitySets.
+        /// </summary>
+        /// <returns>A new container instance.</returns>
+        protected override EntityContainer CreateEntityContainer()
+        {
+            return new fbsEntityContainer();
+        }
+        
+        /// <summary>
+        /// Service contract for the 'fbs' DomainService.
+        /// </summary>
+        [ServiceContract()]
+        public interface IfbsContract
+        {
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetFeedbacks' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/fbs/GetFeedbacksDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/fbs/GetFeedbacks", ReplyAction="http://tempuri.org/fbs/GetFeedbacksResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetFeedbacks(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetFeedbacks'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetFeedbacks'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetFeedbacks' operation.</returns>
+            QueryResult<feedback> EndGetFeedbacks(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetLecturers' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/fbs/GetLecturersDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/fbs/GetLecturers", ReplyAction="http://tempuri.org/fbs/GetLecturersResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetLecturers(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetLecturers'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetLecturers'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetLecturers' operation.</returns>
+            QueryResult<Lecturer> EndGetLecturers(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetModules' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/fbs/GetModulesDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/fbs/GetModules", ReplyAction="http://tempuri.org/fbs/GetModulesResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetModules(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetModules'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetModules'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetModules' operation.</returns>
+            QueryResult<module> EndGetModules(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetStudents' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/fbs/GetStudentsDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/fbs/GetStudents", ReplyAction="http://tempuri.org/fbs/GetStudentsResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetStudents(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetStudents'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetStudents'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetStudents' operation.</returns>
+            QueryResult<student> EndGetStudents(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetUsers' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/fbs/GetUsersDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/fbs/GetUsers", ReplyAction="http://tempuri.org/fbs/GetUsersResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetUsers(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetUsers'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetUsers'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetUsers' operation.</returns>
+            QueryResult<user> EndGetUsers(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'SubmitChanges' operation.
+            /// </summary>
+            /// <param name="changeSet">The change-set to submit.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/fbs/SubmitChangesDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/fbs/SubmitChanges", ReplyAction="http://tempuri.org/fbs/SubmitChangesResponse")]
+            IAsyncResult BeginSubmitChanges(IEnumerable<ChangeSetEntry> changeSet, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginSubmitChanges'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginSubmitChanges'.</param>
+            /// <returns>The collection of change-set entry elements returned from 'SubmitChanges'.</returns>
+            IEnumerable<ChangeSetEntry> EndSubmitChanges(IAsyncResult result);
+        }
+        
+        internal sealed class fbsEntityContainer : EntityContainer
+        {
+            
+            public fbsEntityContainer()
+            {
+                this.CreateEntitySet<feedback>(EntitySetOperations.All);
+                this.CreateEntitySet<Lecturer>(EntitySetOperations.None);
+                this.CreateEntitySet<module>(EntitySetOperations.None);
+                this.CreateEntitySet<student>(EntitySetOperations.None);
+                this.CreateEntitySet<user>(EntitySetOperations.None);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// The 'feedback' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/Feedb.Web")]
+    public sealed partial class feedback : Entity
+    {
+        
+        private Nullable<DateTime> _date;
+        
+        private string _feedback1;
+        
+        private int _fid;
+        
+        private EntityRef<Lecturer> _lecturer;
+        
+        private int _lectureRating;
+        
+        private EntityRef<module> _module;
+        
+        private int _moduleID;
+        
+        private EntityRef<student> _student;
+        
+        private int _studentID;
+        
+        private int _teacherID;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void OndateChanging(Nullable<DateTime> value);
+        partial void OndateChanged();
+        partial void OnFeedback1Changing(string value);
+        partial void OnFeedback1Changed();
+        partial void OnFIDChanging(int value);
+        partial void OnFIDChanged();
+        partial void OnlectureRatingChanging(int value);
+        partial void OnlectureRatingChanged();
+        partial void OnmoduleIDChanging(int value);
+        partial void OnmoduleIDChanged();
+        partial void OnstudentIDChanging(int value);
+        partial void OnstudentIDChanged();
+        partial void OnteacherIDChanging(int value);
+        partial void OnteacherIDChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="feedback"/> class.
+        /// </summary>
+        public feedback()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'date' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<DateTime> date
+        {
+            get
+            {
+                return this._date;
+            }
+            set
+            {
+                if ((this._date != value))
+                {
+                    this.OndateChanging(value);
+                    this.RaiseDataMemberChanging("date");
+                    this.ValidateProperty("date", value);
+                    this._date = value;
+                    this.RaiseDataMemberChanged("date");
+                    this.OndateChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'Feedback1' value.
+        /// </summary>
+        [DataMember()]
+        [Required()]
+        public string Feedback1
+        {
+            get
+            {
+                return this._feedback1;
+            }
+            set
+            {
+                if ((this._feedback1 != value))
+                {
+                    this.OnFeedback1Changing(value);
+                    this.RaiseDataMemberChanging("Feedback1");
+                    this.ValidateProperty("Feedback1", value);
+                    this._feedback1 = value;
+                    this.RaiseDataMemberChanged("Feedback1");
+                    this.OnFeedback1Changed();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'FID' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int FID
+        {
+            get
+            {
+                return this._fid;
+            }
+            set
+            {
+                if ((this._fid != value))
+                {
+                    this.OnFIDChanging(value);
+                    this.ValidateProperty("FID", value);
+                    this._fid = value;
+                    this.RaisePropertyChanged("FID");
+                    this.OnFIDChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the associated <see cref="Lecturer"/> entity.
+        /// </summary>
+        [Association("Lecturer_feedback", "teacherID", "teacherID", IsForeignKey=true)]
+        [XmlIgnore()]
+        public Lecturer Lecturer
+        {
+            get
+            {
+                if ((this._lecturer == null))
+                {
+                    this._lecturer = new EntityRef<Lecturer>(this, "Lecturer", this.FilterLecturer);
+                }
+                return this._lecturer.Entity;
+            }
+            set
+            {
+                Lecturer previous = this.Lecturer;
+                if ((previous != value))
+                {
+                    this.ValidateProperty("Lecturer", value);
+                    if ((previous != null))
+                    {
+                        this._lecturer.Entity = null;
+                        previous.feedbacks.Remove(this);
+                    }
+                    if ((value != null))
+                    {
+                        this.teacherID = value.teacherID;
+                    }
+                    else
+                    {
+                        this.teacherID = default(int);
+                    }
+                    this._lecturer.Entity = value;
+                    if ((value != null))
+                    {
+                        value.feedbacks.Add(this);
+                    }
+                    this.RaisePropertyChanged("Lecturer");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'lectureRating' value.
+        /// </summary>
+        [DataMember()]
+        public int lectureRating
+        {
+            get
+            {
+                return this._lectureRating;
+            }
+            set
+            {
+                if ((this._lectureRating != value))
+                {
+                    this.OnlectureRatingChanging(value);
+                    this.RaiseDataMemberChanging("lectureRating");
+                    this.ValidateProperty("lectureRating", value);
+                    this._lectureRating = value;
+                    this.RaiseDataMemberChanged("lectureRating");
+                    this.OnlectureRatingChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the associated <see cref="module"/> entity.
+        /// </summary>
+        [Association("module_feedback", "moduleID", "moduleID", IsForeignKey=true)]
+        [XmlIgnore()]
+        public module module
+        {
+            get
+            {
+                if ((this._module == null))
+                {
+                    this._module = new EntityRef<module>(this, "module", this.Filtermodule);
+                }
+                return this._module.Entity;
+            }
+            set
+            {
+                module previous = this.module;
+                if ((previous != value))
+                {
+                    this.ValidateProperty("module", value);
+                    if ((previous != null))
+                    {
+                        this._module.Entity = null;
+                        previous.feedbacks.Remove(this);
+                    }
+                    if ((value != null))
+                    {
+                        this.moduleID = value.moduleID;
+                    }
+                    else
+                    {
+                        this.moduleID = default(int);
+                    }
+                    this._module.Entity = value;
+                    if ((value != null))
+                    {
+                        value.feedbacks.Add(this);
+                    }
+                    this.RaisePropertyChanged("module");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'moduleID' value.
+        /// </summary>
+        [DataMember()]
+        [RoundtripOriginal()]
+        public int moduleID
+        {
+            get
+            {
+                return this._moduleID;
+            }
+            set
+            {
+                if ((this._moduleID != value))
+                {
+                    this.OnmoduleIDChanging(value);
+                    this.RaiseDataMemberChanging("moduleID");
+                    this.ValidateProperty("moduleID", value);
+                    this._moduleID = value;
+                    this.RaiseDataMemberChanged("moduleID");
+                    this.OnmoduleIDChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the associated <see cref="student"/> entity.
+        /// </summary>
+        [Association("student_feedback", "studentID", "studentID", IsForeignKey=true)]
+        [XmlIgnore()]
+        public student student
+        {
+            get
+            {
+                if ((this._student == null))
+                {
+                    this._student = new EntityRef<student>(this, "student", this.Filterstudent);
+                }
+                return this._student.Entity;
+            }
+            set
+            {
+                student previous = this.student;
+                if ((previous != value))
+                {
+                    this.ValidateProperty("student", value);
+                    if ((previous != null))
+                    {
+                        this._student.Entity = null;
+                        previous.feedbacks.Remove(this);
+                    }
+                    if ((value != null))
+                    {
+                        this.studentID = value.studentID;
+                    }
+                    else
+                    {
+                        this.studentID = default(int);
+                    }
+                    this._student.Entity = value;
+                    if ((value != null))
+                    {
+                        value.feedbacks.Add(this);
+                    }
+                    this.RaisePropertyChanged("student");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'studentID' value.
+        /// </summary>
+        [DataMember()]
+        [RoundtripOriginal()]
+        public int studentID
+        {
+            get
+            {
+                return this._studentID;
+            }
+            set
+            {
+                if ((this._studentID != value))
+                {
+                    this.OnstudentIDChanging(value);
+                    this.RaiseDataMemberChanging("studentID");
+                    this.ValidateProperty("studentID", value);
+                    this._studentID = value;
+                    this.RaiseDataMemberChanged("studentID");
+                    this.OnstudentIDChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'teacherID' value.
+        /// </summary>
+        [DataMember()]
+        [RoundtripOriginal()]
+        public int teacherID
+        {
+            get
+            {
+                return this._teacherID;
+            }
+            set
+            {
+                if ((this._teacherID != value))
+                {
+                    this.OnteacherIDChanging(value);
+                    this.RaiseDataMemberChanging("teacherID");
+                    this.ValidateProperty("teacherID", value);
+                    this._teacherID = value;
+                    this.RaiseDataMemberChanged("teacherID");
+                    this.OnteacherIDChanged();
+                }
+            }
+        }
+        
+        private bool FilterLecturer(Lecturer entity)
+        {
+            return (entity.teacherID == this.teacherID);
+        }
+        
+        private bool Filtermodule(module entity)
+        {
+            return (entity.moduleID == this.moduleID);
+        }
+        
+        private bool Filterstudent(student entity)
+        {
+            return (entity.studentID == this.studentID);
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._fid;
+        }
+    }
+    
+    /// <summary>
+    /// The 'Lecturer' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/Feedb.Web")]
+    public sealed partial class Lecturer : Entity
+    {
+        
+        private EntityCollection<feedback> _feedbacks;
+        
+        private string _teacherFirstName;
+        
+        private int _teacherID;
+        
+        private string _teacherLastName;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void OnteacherFirstNameChanging(string value);
+        partial void OnteacherFirstNameChanged();
+        partial void OnteacherIDChanging(int value);
+        partial void OnteacherIDChanged();
+        partial void OnteacherLastNameChanging(string value);
+        partial void OnteacherLastNameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Lecturer"/> class.
+        /// </summary>
+        public Lecturer()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets the collection of associated <see cref="feedback"/> entity instances.
+        /// </summary>
+        [Association("Lecturer_feedback", "teacherID", "teacherID")]
+        [XmlIgnore()]
+        public EntityCollection<feedback> feedbacks
+        {
+            get
+            {
+                if ((this._feedbacks == null))
+                {
+                    this._feedbacks = new EntityCollection<feedback>(this, "feedbacks", this.Filterfeedbacks, this.Attachfeedbacks, this.Detachfeedbacks);
+                }
+                return this._feedbacks;
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'teacherFirstName' value.
+        /// </summary>
+        [DataMember()]
+        [Required()]
+        [StringLength(25)]
+        public string teacherFirstName
+        {
+            get
+            {
+                return this._teacherFirstName;
+            }
+            set
+            {
+                if ((this._teacherFirstName != value))
+                {
+                    this.OnteacherFirstNameChanging(value);
+                    this.RaiseDataMemberChanging("teacherFirstName");
+                    this.ValidateProperty("teacherFirstName", value);
+                    this._teacherFirstName = value;
+                    this.RaiseDataMemberChanged("teacherFirstName");
+                    this.OnteacherFirstNameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'teacherID' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int teacherID
+        {
+            get
+            {
+                return this._teacherID;
+            }
+            set
+            {
+                if ((this._teacherID != value))
+                {
+                    this.OnteacherIDChanging(value);
+                    this.ValidateProperty("teacherID", value);
+                    this._teacherID = value;
+                    this.RaisePropertyChanged("teacherID");
+                    this.OnteacherIDChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'teacherLastName' value.
+        /// </summary>
+        [DataMember()]
+        [Required()]
+        [StringLength(25)]
+        public string teacherLastName
+        {
+            get
+            {
+                return this._teacherLastName;
+            }
+            set
+            {
+                if ((this._teacherLastName != value))
+                {
+                    this.OnteacherLastNameChanging(value);
+                    this.RaiseDataMemberChanging("teacherLastName");
+                    this.ValidateProperty("teacherLastName", value);
+                    this._teacherLastName = value;
+                    this.RaiseDataMemberChanged("teacherLastName");
+                    this.OnteacherLastNameChanged();
+                }
+            }
+        }
+        
+        private void Attachfeedbacks(feedback entity)
+        {
+            entity.Lecturer = this;
+        }
+        
+        private void Detachfeedbacks(feedback entity)
+        {
+            entity.Lecturer = null;
+        }
+        
+        private bool Filterfeedbacks(feedback entity)
+        {
+            return (entity.teacherID == this.teacherID);
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._teacherID;
+        }
+    }
+    
+    /// <summary>
+    /// The 'module' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/Feedb.Web")]
+    public sealed partial class module : Entity
+    {
+        
+        private EntityCollection<feedback> _feedbacks;
+        
+        private string _moduleCode;
+        
+        private int _moduleID;
+        
+        private string _moduleName;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void OnmoduleCodeChanging(string value);
+        partial void OnmoduleCodeChanged();
+        partial void OnmoduleIDChanging(int value);
+        partial void OnmoduleIDChanged();
+        partial void OnmoduleNameChanging(string value);
+        partial void OnmoduleNameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="module"/> class.
+        /// </summary>
+        public module()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets the collection of associated <see cref="feedback"/> entity instances.
+        /// </summary>
+        [Association("module_feedback", "moduleID", "moduleID")]
+        [XmlIgnore()]
+        public EntityCollection<feedback> feedbacks
+        {
+            get
+            {
+                if ((this._feedbacks == null))
+                {
+                    this._feedbacks = new EntityCollection<feedback>(this, "feedbacks", this.Filterfeedbacks, this.Attachfeedbacks, this.Detachfeedbacks);
+                }
+                return this._feedbacks;
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'moduleCode' value.
+        /// </summary>
+        [DataMember()]
+        [Required()]
+        public string moduleCode
+        {
+            get
+            {
+                return this._moduleCode;
+            }
+            set
+            {
+                if ((this._moduleCode != value))
+                {
+                    this.OnmoduleCodeChanging(value);
+                    this.RaiseDataMemberChanging("moduleCode");
+                    this.ValidateProperty("moduleCode", value);
+                    this._moduleCode = value;
+                    this.RaiseDataMemberChanged("moduleCode");
+                    this.OnmoduleCodeChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'moduleID' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int moduleID
+        {
+            get
+            {
+                return this._moduleID;
+            }
+            set
+            {
+                if ((this._moduleID != value))
+                {
+                    this.OnmoduleIDChanging(value);
+                    this.ValidateProperty("moduleID", value);
+                    this._moduleID = value;
+                    this.RaisePropertyChanged("moduleID");
+                    this.OnmoduleIDChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'moduleName' value.
+        /// </summary>
+        [DataMember()]
+        [Required()]
+        public string moduleName
+        {
+            get
+            {
+                return this._moduleName;
+            }
+            set
+            {
+                if ((this._moduleName != value))
+                {
+                    this.OnmoduleNameChanging(value);
+                    this.RaiseDataMemberChanging("moduleName");
+                    this.ValidateProperty("moduleName", value);
+                    this._moduleName = value;
+                    this.RaiseDataMemberChanged("moduleName");
+                    this.OnmoduleNameChanged();
+                }
+            }
+        }
+        
+        private void Attachfeedbacks(feedback entity)
+        {
+            entity.module = this;
+        }
+        
+        private void Detachfeedbacks(feedback entity)
+        {
+            entity.module = null;
+        }
+        
+        private bool Filterfeedbacks(feedback entity)
+        {
+            return (entity.moduleID == this.moduleID);
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._moduleID;
+        }
+    }
+    
+    /// <summary>
     /// The 'RegistrationData' class.
     /// </summary>
     [DataContract(Namespace="http://schemas.datacontract.org/2004/07/Feedb.Web")]
@@ -489,6 +1487,329 @@ namespace Feedb.Web
                     this.OnUserNameChanged();
                 }
             }
+        }
+    }
+    
+    /// <summary>
+    /// The 'student' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/Feedb.Web")]
+    public sealed partial class student : Entity
+    {
+        
+        private int _courseID;
+        
+        private EntityCollection<feedback> _feedbacks;
+        
+        private string _studentFName;
+        
+        private int _studentID;
+        
+        private string _studentLName;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void OncourseIDChanging(int value);
+        partial void OncourseIDChanged();
+        partial void OnstudentFNameChanging(string value);
+        partial void OnstudentFNameChanged();
+        partial void OnstudentIDChanging(int value);
+        partial void OnstudentIDChanged();
+        partial void OnstudentLNameChanging(string value);
+        partial void OnstudentLNameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="student"/> class.
+        /// </summary>
+        public student()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'courseID' value.
+        /// </summary>
+        [DataMember()]
+        public int courseID
+        {
+            get
+            {
+                return this._courseID;
+            }
+            set
+            {
+                if ((this._courseID != value))
+                {
+                    this.OncourseIDChanging(value);
+                    this.RaiseDataMemberChanging("courseID");
+                    this.ValidateProperty("courseID", value);
+                    this._courseID = value;
+                    this.RaiseDataMemberChanged("courseID");
+                    this.OncourseIDChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets the collection of associated <see cref="feedback"/> entity instances.
+        /// </summary>
+        [Association("student_feedback", "studentID", "studentID")]
+        [XmlIgnore()]
+        public EntityCollection<feedback> feedbacks
+        {
+            get
+            {
+                if ((this._feedbacks == null))
+                {
+                    this._feedbacks = new EntityCollection<feedback>(this, "feedbacks", this.Filterfeedbacks, this.Attachfeedbacks, this.Detachfeedbacks);
+                }
+                return this._feedbacks;
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'studentFName' value.
+        /// </summary>
+        [DataMember()]
+        [Required()]
+        [StringLength(25)]
+        public string studentFName
+        {
+            get
+            {
+                return this._studentFName;
+            }
+            set
+            {
+                if ((this._studentFName != value))
+                {
+                    this.OnstudentFNameChanging(value);
+                    this.RaiseDataMemberChanging("studentFName");
+                    this.ValidateProperty("studentFName", value);
+                    this._studentFName = value;
+                    this.RaiseDataMemberChanged("studentFName");
+                    this.OnstudentFNameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'studentID' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int studentID
+        {
+            get
+            {
+                return this._studentID;
+            }
+            set
+            {
+                if ((this._studentID != value))
+                {
+                    this.OnstudentIDChanging(value);
+                    this.ValidateProperty("studentID", value);
+                    this._studentID = value;
+                    this.RaisePropertyChanged("studentID");
+                    this.OnstudentIDChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'studentLName' value.
+        /// </summary>
+        [DataMember()]
+        [Required()]
+        [StringLength(25)]
+        public string studentLName
+        {
+            get
+            {
+                return this._studentLName;
+            }
+            set
+            {
+                if ((this._studentLName != value))
+                {
+                    this.OnstudentLNameChanging(value);
+                    this.RaiseDataMemberChanging("studentLName");
+                    this.ValidateProperty("studentLName", value);
+                    this._studentLName = value;
+                    this.RaiseDataMemberChanged("studentLName");
+                    this.OnstudentLNameChanged();
+                }
+            }
+        }
+        
+        private void Attachfeedbacks(feedback entity)
+        {
+            entity.student = this;
+        }
+        
+        private void Detachfeedbacks(feedback entity)
+        {
+            entity.student = null;
+        }
+        
+        private bool Filterfeedbacks(feedback entity)
+        {
+            return (entity.studentID == this.studentID);
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._studentID;
+        }
+    }
+    
+    /// <summary>
+    /// The 'user' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/Feedb.Web")]
+    public sealed partial class user : Entity
+    {
+        
+        private string _password;
+        
+        private int _studentID;
+        
+        private string _studentName;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void OnpasswordChanging(string value);
+        partial void OnpasswordChanged();
+        partial void OnstudentIDChanging(int value);
+        partial void OnstudentIDChanged();
+        partial void OnstudentNameChanging(string value);
+        partial void OnstudentNameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="user"/> class.
+        /// </summary>
+        public user()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'password' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [Required()]
+        [RoundtripOriginal()]
+        [StringLength(50)]
+        public string password
+        {
+            get
+            {
+                return this._password;
+            }
+            set
+            {
+                if ((this._password != value))
+                {
+                    this.OnpasswordChanging(value);
+                    this.ValidateProperty("password", value);
+                    this._password = value;
+                    this.RaisePropertyChanged("password");
+                    this.OnpasswordChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'studentID' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int studentID
+        {
+            get
+            {
+                return this._studentID;
+            }
+            set
+            {
+                if ((this._studentID != value))
+                {
+                    this.OnstudentIDChanging(value);
+                    this.ValidateProperty("studentID", value);
+                    this._studentID = value;
+                    this.RaisePropertyChanged("studentID");
+                    this.OnstudentIDChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'studentName' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [Required()]
+        [RoundtripOriginal()]
+        [StringLength(25)]
+        public string studentName
+        {
+            get
+            {
+                return this._studentName;
+            }
+            set
+            {
+                if ((this._studentName != value))
+                {
+                    this.OnstudentNameChanging(value);
+                    this.ValidateProperty("studentName", value);
+                    this._studentName = value;
+                    this.RaisePropertyChanged("studentName");
+                    this.OnstudentNameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            if (((this._password == null) 
+                        || (this._studentName == null)))
+            {
+                return null;
+            }
+            return EntityKey.Create(this._password, this._studentID, this._studentName);
         }
     }
     
