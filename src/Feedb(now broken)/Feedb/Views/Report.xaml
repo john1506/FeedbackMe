@@ -1,0 +1,55 @@
+﻿<navigation:Page x:Class="Feedb.Views.Report" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           mc:Ignorable="d"
+           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+           d:DesignWidth="1024" d:DesignHeight="768"
+           Title="Report Page" xmlns:riaControls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.DomainServices" xmlns:my="clr-namespace:Feedb.Web" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Visibility="Visible" Name="qInput" Text="Order By" Margin="10,3,10,0" Width="55"/>
+            <ComboBox Name="sBox" Width="120" Margin="0,0,10,0" SelectedIndex="0" SelectionChanged="sBox_SelectionChanged">
+                <ComboBoxItem Content="Date"/>
+                <ComboBoxItem Content="Module Name"/>
+                <ComboBoxItem Content="Rating"/>
+                <ComboBoxItem Content="Teacher"/>
+            </ComboBox>
+            <sdk:DatePicker Visibility="Visible" Name="dp" Margin="0,0,-150,0"  Height="22" Width="150" />
+            <TextBox Name="query" Width="150" Text="Module Name" Visibility="Collapsed"/>
+            <Button Content="Go" Name="qBtn" Click="qBtn_Click" Margin="160,0,0,0"/>
+        </StackPanel>
+        <riaControls:DomainDataSource AutoLoad="True" d:DesignData="{d:DesignInstance my:feedback, CreateList=true}" Height="0" LoadedData="feedbackDomainDataSource_LoadedData" Name="feedbackDomainDataSource" QueryName="GetFeedbacksQuery" Width="0">
+            <riaControls:DomainDataSource.DomainContext>
+                <my:fbs />
+            </riaControls:DomainDataSource.DomainContext>
+        </riaControls:DomainDataSource>
+        <sdk:DataGrid AutoGenerateColumns="False" Grid.Row="1" HorizontalAlignment="Left" ItemsSource="{Binding ElementName=feedbackDomainDataSource, Path=Data}" Margin="0,6,0,0" Name="feedbackDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Width="1024">
+            <sdk:DataGrid.Columns>
+                <sdk:DataGridTemplateColumn x:Name="dateColumn" Header="Date" Width="auto">
+                    <sdk:DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <sdk:DatePicker SelectedDate="{Binding Path=date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, TargetNullValue=''}" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellEditingTemplate>
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=date, StringFormat=\{0:d\}}" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
+                <sdk:DataGridTextColumn x:Name="feedback1Column" Binding="{Binding Path=Feedback1}" Header="Feedback 1" Width="auto" />
+                <sdk:DataGridTextColumn x:Name="fIDColumn" Binding="{Binding Path=FID, Mode=OneWay}" Header="FID" IsReadOnly="True" Width="auto" />
+                <sdk:DataGridTextColumn x:Name="lectureRatingColumn" Binding="{Binding Path=lectureRating}" Header="Lecture Rating" Width="auto" />
+                <sdk:DataGridTextColumn x:Name="moduleIDColumn" Binding="{Binding Path=moduleID}" Header="Module ID" Width="auto" />
+                <sdk:DataGridTextColumn x:Name="studentIDColumn" Binding="{Binding Path=studentID}" Header="Student ID" Width="auto" />
+                <sdk:DataGridTextColumn x:Name="teacherIDColumn" Binding="{Binding Path=teacherID}" Header="Teacher ID" Width="auto" />
+            </sdk:DataGrid.Columns>
+        </sdk:DataGrid>
+    </Grid>
+</navigation:Page>

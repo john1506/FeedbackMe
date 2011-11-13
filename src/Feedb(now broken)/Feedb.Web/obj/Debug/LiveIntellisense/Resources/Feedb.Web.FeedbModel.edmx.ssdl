@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FeedbackAppModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="FeedbackAppModelStoreContainer">
+    <EntitySet Name="feedback" EntityType="FeedbackAppModel.Store.feedback" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lecturers" EntityType="FeedbackAppModel.Store.Lecturers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="modules" EntityType="FeedbackAppModel.Store.modules" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="students" EntityType="FeedbackAppModel.Store.students" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="users" EntityType="FeedbackAppModel.Store.users" store:Type="Tables" store:Schema="dbo" store:Name="users">
+      <DefiningQuery>SELECT 
+      [users].[studentID] AS [studentID], 
+      [users].[studentName] AS [studentName], 
+      [users].[password] AS [password]
+      FROM [dbo].[users] AS [users]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_feedback_Lecturers" Association="FeedbackAppModel.Store.FK_feedback_Lecturers">
+      <End Role="Lecturers" EntitySet="Lecturers" />
+      <End Role="feedback" EntitySet="feedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK_feedback_modules" Association="FeedbackAppModel.Store.FK_feedback_modules">
+      <End Role="modules" EntitySet="modules" />
+      <End Role="feedback" EntitySet="feedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK_feedback_students" Association="FeedbackAppModel.Store.FK_feedback_students">
+      <End Role="students" EntitySet="students" />
+      <End Role="feedback" EntitySet="feedback" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="feedback">
+    <Key>
+      <PropertyRef Name="FID" />
+    </Key>
+    <Property Name="FID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="studentID" Type="int" Nullable="false" />
+    <Property Name="moduleID" Type="int" Nullable="false" />
+    <Property Name="teacherID" Type="int" Nullable="false" />
+    <Property Name="Feedback" Type="text" Nullable="false" />
+    <Property Name="lectureRating" Type="int" Nullable="false" />
+    <Property Name="date" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Lecturers">
+    <Key>
+      <PropertyRef Name="teacherID" />
+    </Key>
+    <Property Name="teacherID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="teacherFirstName" Type="nchar" Nullable="false" MaxLength="25" />
+    <Property Name="teacherLastName" Type="nchar" Nullable="false" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="modules">
+    <Key>
+      <PropertyRef Name="moduleID" />
+    </Key>
+    <Property Name="moduleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="moduleName" Type="text" Nullable="false" />
+    <Property Name="moduleCode" Type="text" Nullable="false" />
+  </EntityType>
+  <EntityType Name="students">
+    <Key>
+      <PropertyRef Name="studentID" />
+    </Key>
+    <Property Name="studentID" Type="int" Nullable="false" />
+    <Property Name="studentFName" Type="nchar" Nullable="false" MaxLength="25" />
+    <Property Name="studentLName" Type="nchar" Nullable="false" MaxLength="25" />
+    <Property Name="courseID" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'FeedbackApp.dbo.users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="studentID" />
+      <PropertyRef Name="studentName" />
+      <PropertyRef Name="password" />
+    </Key>
+    <Property Name="studentID" Type="int" Nullable="false" />
+    <Property Name="studentName" Type="nchar" Nullable="false" MaxLength="25" />
+    <Property Name="password" Type="nchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_feedback_Lecturers">
+    <End Role="Lecturers" Type="FeedbackAppModel.Store.Lecturers" Multiplicity="1" />
+    <End Role="feedback" Type="FeedbackAppModel.Store.feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lecturers">
+        <PropertyRef Name="teacherID" />
+      </Principal>
+      <Dependent Role="feedback">
+        <PropertyRef Name="teacherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_feedback_modules">
+    <End Role="modules" Type="FeedbackAppModel.Store.modules" Multiplicity="1" />
+    <End Role="feedback" Type="FeedbackAppModel.Store.feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="modules">
+        <PropertyRef Name="moduleID" />
+      </Principal>
+      <Dependent Role="feedback">
+        <PropertyRef Name="moduleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_feedback_students">
+    <End Role="students" Type="FeedbackAppModel.Store.students" Multiplicity="1" />
+    <End Role="feedback" Type="FeedbackAppModel.Store.feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="students">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="feedback">
+        <PropertyRef Name="studentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

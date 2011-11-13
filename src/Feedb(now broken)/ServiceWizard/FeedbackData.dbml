@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="FeedbackApp" Class="FeedbackDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=JOHN-PC\SQLEXPRESS;Initial Catalog=FeedbackApp;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="FeedbackAppConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.feedback" Member="feedbacks">
+    <Type Name="feedback">
+      <Column Name="FID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="studentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="moduleID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="teacherID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Feedback" Member="Feedback1" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="lectureRating" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="modules_feedback" Member="modules" ThisKey="moduleID" OtherKey="moduleID" Type="modules" IsForeignKey="true" />
+      <Association Name="Lecturer_feedback" Member="Lecturer" ThisKey="teacherID" OtherKey="teacherID" Type="Lecturer" IsForeignKey="true" />
+      <Association Name="student_feedback" Member="student" ThisKey="studentID" OtherKey="studentID" Type="student" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.modules" Member="modules">
+    <Type Name="modules">
+      <Column Name="moduleID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="moduleName" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="moduleCode" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="modules_feedback" Member="feedbacks" ThisKey="moduleID" OtherKey="moduleID" Type="feedback" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Lecturers" Member="Lecturers">
+    <Type Name="Lecturer">
+      <Column Name="teacherID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="teacherName" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Lecturer_feedback" Member="feedbacks" ThisKey="teacherID" OtherKey="teacherID" Type="feedback" />
+    </Type>
+  </Table>
+  <Table Name="dbo.students" Member="students">
+    <Type Name="student">
+      <Column Name="studentID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="studentFName" Type="System.String" DbType="NChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="studentLName" Type="System.String" DbType="NChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="courseID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Association Name="student_feedback" Member="feedbacks" ThisKey="studentID" OtherKey="studentID" Type="feedback" />
+    </Type>
+  </Table>
+</Database>

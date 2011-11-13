@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FeedbackAppModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="FeedbackAppEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="feedbacks" EntityType="FeedbackAppModel.feedback" />
+    <EntitySet Name="Lecturers" EntityType="FeedbackAppModel.Lecturer" />
+    <EntitySet Name="modules" EntityType="FeedbackAppModel.module" />
+    <EntitySet Name="students" EntityType="FeedbackAppModel.student" />
+    <EntitySet Name="users" EntityType="FeedbackAppModel.user" />
+    <AssociationSet Name="FK_feedback_Lecturers" Association="FeedbackAppModel.FK_feedback_Lecturers">
+      <End Role="Lecturers" EntitySet="Lecturers" />
+      <End Role="feedback" EntitySet="feedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_feedback_modules" Association="FeedbackAppModel.FK_feedback_modules">
+      <End Role="modules" EntitySet="modules" />
+      <End Role="feedback" EntitySet="feedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_feedback_students" Association="FeedbackAppModel.FK_feedback_students">
+      <End Role="students" EntitySet="students" />
+      <End Role="feedback" EntitySet="feedbacks" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="feedback">
+    <Key>
+      <PropertyRef Name="FID" />
+    </Key>
+    <Property Name="FID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="studentID" Type="Int32" Nullable="false" />
+    <Property Name="moduleID" Type="Int32" Nullable="false" />
+    <Property Name="teacherID" Type="Int32" Nullable="false" />
+    <Property Name="Feedback1" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="lectureRating" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" />
+    <NavigationProperty Name="Lecturer" Relationship="FeedbackAppModel.FK_feedback_Lecturers" FromRole="feedback" ToRole="Lecturers" />
+    <NavigationProperty Name="module" Relationship="FeedbackAppModel.FK_feedback_modules" FromRole="feedback" ToRole="modules" />
+    <NavigationProperty Name="student" Relationship="FeedbackAppModel.FK_feedback_students" FromRole="feedback" ToRole="students" />
+  </EntityType>
+  <EntityType Name="Lecturer">
+    <Key>
+      <PropertyRef Name="teacherID" />
+    </Key>
+    <Property Name="teacherID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="teacherFirstName" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="true" />
+    <Property Name="teacherLastName" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="true" />
+    <NavigationProperty Name="feedbacks" Relationship="FeedbackAppModel.FK_feedback_Lecturers" FromRole="Lecturers" ToRole="feedback" />
+  </EntityType>
+  <EntityType Name="module">
+    <Key>
+      <PropertyRef Name="moduleID" />
+    </Key>
+    <Property Name="moduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="moduleName" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="moduleCode" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="feedbacks" Relationship="FeedbackAppModel.FK_feedback_modules" FromRole="modules" ToRole="feedback" />
+  </EntityType>
+  <EntityType Name="student">
+    <Key>
+      <PropertyRef Name="studentID" />
+    </Key>
+    <Property Name="studentID" Type="Int32" Nullable="false" />
+    <Property Name="studentFName" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="true" />
+    <Property Name="studentLName" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="true" />
+    <Property Name="courseID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="feedbacks" Relationship="FeedbackAppModel.FK_feedback_students" FromRole="students" ToRole="feedback" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="studentID" />
+      <PropertyRef Name="studentName" />
+      <PropertyRef Name="password" />
+    </Key>
+    <Property Name="studentID" Type="Int32" Nullable="false" />
+    <Property Name="studentName" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="true" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+  </EntityType>
+  <Association Name="FK_feedback_Lecturers">
+    <End Role="Lecturers" Type="FeedbackAppModel.Lecturer" Multiplicity="1" />
+    <End Role="feedback" Type="FeedbackAppModel.feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lecturers">
+        <PropertyRef Name="teacherID" />
+      </Principal>
+      <Dependent Role="feedback">
+        <PropertyRef Name="teacherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_feedback_modules">
+    <End Role="modules" Type="FeedbackAppModel.module" Multiplicity="1" />
+    <End Role="feedback" Type="FeedbackAppModel.feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="modules">
+        <PropertyRef Name="moduleID" />
+      </Principal>
+      <Dependent Role="feedback">
+        <PropertyRef Name="moduleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_feedback_students">
+    <End Role="students" Type="FeedbackAppModel.student" Multiplicity="1" />
+    <End Role="feedback" Type="FeedbackAppModel.feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="students">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="feedback">
+        <PropertyRef Name="studentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

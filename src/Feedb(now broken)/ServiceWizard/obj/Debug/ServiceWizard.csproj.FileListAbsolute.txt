@@ -1,0 +1,5 @@
+C:\Users\John\FeedbackMe\src\Feedb\ServiceWizard\bin\ServiceWizard.dll
+C:\Users\John\FeedbackMe\src\Feedb\ServiceWizard\bin\ServiceWizard.pdb
+C:\Users\John\FeedbackMe\src\Feedb\ServiceWizard\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\John\FeedbackMe\src\Feedb\ServiceWizard\obj\Debug\ServiceWizard.dll
+C:\Users\John\FeedbackMe\src\Feedb\ServiceWizard\obj\Debug\ServiceWizard.pdb
