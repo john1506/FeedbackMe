@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Feedb", "Feedb\Feedb.csproj", "{DCFD33E8-7C67-4655-B6CA-79A26AC0F586}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E04C46DB-B86B-4485-AD2D-A54F80668134} = {E04C46DB-B86B-4485-AD2D-A54F80668134}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Feedb.Web", "Feedb.Web\Feedb.Web.csproj", "{E04C46DB-B86B-4485-AD2D-A54F80668134}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCFD33E8-7C67-4655-B6CA-79A26AC0F586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCFD33E8-7C67-4655-B6CA-79A26AC0F586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCFD33E8-7C67-4655-B6CA-79A26AC0F586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCFD33E8-7C67-4655-B6CA-79A26AC0F586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E04C46DB-B86B-4485-AD2D-A54F80668134}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E04C46DB-B86B-4485-AD2D-A54F80668134}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E04C46DB-B86B-4485-AD2D-A54F80668134}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E04C46DB-B86B-4485-AD2D-A54F80668134}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

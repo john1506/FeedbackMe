@@ -1,0 +1,9 @@
+c:\users\john\FeedbackMe\src\Feedb\Feedb.Web\bin\Feedb.Web.dll
+c:\users\john\FeedbackMe\src\Feedb\Feedb.Web\bin\Feedb.Web.pdb
+c:\users\john\FeedbackMe\src\Feedb\Feedb.Web\obj\Debug\ResolveAssemblyReference.cache
+c:\users\john\FeedbackMe\src\Feedb\Feedb.Web\obj\Debug\Feedb.Web.Resources.ValidationErrorResources.resources
+c:\users\john\FeedbackMe\src\Feedb\Feedb.Web\obj\Debug\Feedb.Web.Resources.RegistrationDataResources.resources
+c:\users\john\FeedbackMe\src\Feedb\Feedb.Web\obj\Debug\GenerateResource.read.1.tlog
+c:\users\john\FeedbackMe\src\Feedb\Feedb.Web\obj\Debug\GenerateResource.write.1.tlog
+c:\users\john\FeedbackMe\src\Feedb\Feedb.Web\obj\Debug\Feedb.Web.dll
+c:\users\john\FeedbackMe\src\Feedb\Feedb.Web\obj\Debug\Feedb.Web.pdb

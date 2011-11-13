@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FeedbackAppModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="FeedbackAppModelStoreContainer">
+          <EntitySet Name="feedback" EntityType="FeedbackAppModel.Store.feedback" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Lecturers" EntityType="FeedbackAppModel.Store.Lecturers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="modules" EntityType="FeedbackAppModel.Store.modules" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="students" EntityType="FeedbackAppModel.Store.students" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="users" EntityType="FeedbackAppModel.Store.users" store:Type="Tables" store:Schema="dbo" store:Name="users">
+            <DefiningQuery>SELECT 
+      [users].[studentID] AS [studentID], 
+      [users].[studentName] AS [studentName], 
+      [users].[password] AS [password]
+      FROM [dbo].[users] AS [users]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_feedback_Lecturers" Association="FeedbackAppModel.Store.FK_feedback_Lecturers">
+            <End Role="Lecturers" EntitySet="Lecturers" />
+            <End Role="feedback" EntitySet="feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_feedback_modules" Association="FeedbackAppModel.Store.FK_feedback_modules">
+            <End Role="modules" EntitySet="modules" />
+            <End Role="feedback" EntitySet="feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_feedback_students" Association="FeedbackAppModel.Store.FK_feedback_students">
+            <End Role="students" EntitySet="students" />
+            <End Role="feedback" EntitySet="feedback" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="feedback">
+          <Key>
+            <PropertyRef Name="FID" />
+          </Key>
+          <Property Name="FID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="studentID" Type="int" Nullable="false" />
+          <Property Name="moduleID" Type="int" Nullable="false" />
+          <Property Name="teacherID" Type="int" Nullable="false" />
+          <Property Name="Feedback" Type="text" Nullable="false" />
+          <Property Name="lectureRating" Type="int" Nullable="false" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Lecturers">
+          <Key>
+            <PropertyRef Name="teacherID" />
+          </Key>
+          <Property Name="teacherID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="teacherFirstName" Type="nchar" Nullable="false" MaxLength="25" />
+          <Property Name="teacherLastName" Type="nchar" Nullable="false" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="modules">
+          <Key>
+            <PropertyRef Name="moduleID" />
+          </Key>
+          <Property Name="moduleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="moduleName" Type="text" Nullable="false" />
+          <Property Name="moduleCode" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="students">
+          <Key>
+            <PropertyRef Name="studentID" />
+          </Key>
+          <Property Name="studentID" Type="int" Nullable="false" />
+          <Property Name="studentFName" Type="nchar" Nullable="false" MaxLength="25" />
+          <Property Name="studentLName" Type="nchar" Nullable="false" MaxLength="25" />
+          <Property Name="courseID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'FeedbackApp.dbo.users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="studentID" />
+            <PropertyRef Name="studentName" />
+            <PropertyRef Name="password" />
+          </Key>
+          <Property Name="studentID" Type="int" Nullable="false" />
+          <Property Name="studentName" Type="nchar" Nullable="false" MaxLength="25" />
+          <Property Name="password" Type="nchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_feedback_Lecturers">
+          <End Role="Lecturers" Type="FeedbackAppModel.Store.Lecturers" Multiplicity="1" />
+          <End Role="feedback" Type="FeedbackAppModel.Store.feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturers">
+              <PropertyRef Name="teacherID" />
+            </Principal>
+            <Dependent Role="feedback">
+              <PropertyRef Name="teacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_feedback_modules">
+          <End Role="modules" Type="FeedbackAppModel.Store.modules" Multiplicity="1" />
+          <End Role="feedback" Type="FeedbackAppModel.Store.feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modules">
+              <PropertyRef Name="moduleID" />
+            </Principal>
+            <Dependent Role="feedback">
+              <PropertyRef Name="moduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_feedback_students">
+          <End Role="students" Type="FeedbackAppModel.Store.students" Multiplicity="1" />
+          <End Role="feedback" Type="FeedbackAppModel.Store.feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="students">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="feedback">
+              <PropertyRef Name="studentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FeedbackAppModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="FeedbackAppEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="feedbacks" EntityType="FeedbackAppModel.feedback" />
+          <EntitySet Name="Lecturers" EntityType="FeedbackAppModel.Lecturer" />
+          <EntitySet Name="modules" EntityType="FeedbackAppModel.module" />
+          <EntitySet Name="students" EntityType="FeedbackAppModel.student" />
+          <EntitySet Name="users" EntityType="FeedbackAppModel.user" />
+          <AssociationSet Name="FK_feedback_Lecturers" Association="FeedbackAppModel.FK_feedback_Lecturers">
+            <End Role="Lecturers" EntitySet="Lecturers" />
+            <End Role="feedback" EntitySet="feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_feedback_modules" Association="FeedbackAppModel.FK_feedback_modules">
+            <End Role="modules" EntitySet="modules" />
+            <End Role="feedback" EntitySet="feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_feedback_students" Association="FeedbackAppModel.FK_feedback_students">
+            <End Role="students" EntitySet="students" />
+            <End Role="feedback" EntitySet="feedbacks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="feedback">
+          <Key>
+            <PropertyRef Name="FID" />
+          </Key>
+          <Property Name="FID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="studentID" Type="Int32" Nullable="false" />
+          <Property Name="moduleID" Type="Int32" Nullable="false" />
+          <Property Name="teacherID" Type="Int32" Nullable="false" />
+          <Property Name="Feedback1" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="lectureRating" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" />
+          <NavigationProperty Name="Lecturer" Relationship="FeedbackAppModel.FK_feedback_Lecturers" FromRole="feedback" ToRole="Lecturers" />
+          <NavigationProperty Name="module" Relationship="FeedbackAppModel.FK_feedback_modules" FromRole="feedback" ToRole="modules" />
+          <NavigationProperty Name="student" Relationship="FeedbackAppModel.FK_feedback_students" FromRole="feedback" ToRole="students" />
+        </EntityType>
+        <EntityType Name="Lecturer">
+          <Key>
+            <PropertyRef Name="teacherID" />
+          </Key>
+          <Property Name="teacherID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="teacherFirstName" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="true" />
+          <Property Name="teacherLastName" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="feedbacks" Relationship="FeedbackAppModel.FK_feedback_Lecturers" FromRole="Lecturers" ToRole="feedback" />
+        </EntityType>
+        <EntityType Name="module">
+          <Key>
+            <PropertyRef Name="moduleID" />
+          </Key>
+          <Property Name="moduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="moduleName" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="moduleCode" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="feedbacks" Relationship="FeedbackAppModel.FK_feedback_modules" FromRole="modules" ToRole="feedback" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="studentID" />
+          </Key>
+          <Property Name="studentID" Type="Int32" Nullable="false" />
+          <Property Name="studentFName" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="true" />
+          <Property Name="studentLName" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="true" />
+          <Property Name="courseID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="feedbacks" Relationship="FeedbackAppModel.FK_feedback_students" FromRole="students" ToRole="feedback" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="studentID" />
+            <PropertyRef Name="studentName" />
+            <PropertyRef Name="password" />
+          </Key>
+          <Property Name="studentID" Type="Int32" Nullable="false" />
+          <Property Name="studentName" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+        </EntityType>
+        <Association Name="FK_feedback_Lecturers">
+          <End Role="Lecturers" Type="FeedbackAppModel.Lecturer" Multiplicity="1" />
+          <End Role="feedback" Type="FeedbackAppModel.feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturers">
+              <PropertyRef Name="teacherID" />
+            </Principal>
+            <Dependent Role="feedback">
+              <PropertyRef Name="teacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_feedback_modules">
+          <End Role="modules" Type="FeedbackAppModel.module" Multiplicity="1" />
+          <End Role="feedback" Type="FeedbackAppModel.feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modules">
+              <PropertyRef Name="moduleID" />
+            </Principal>
+            <Dependent Role="feedback">
+              <PropertyRef Name="moduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_feedback_students">
+          <End Role="students" Type="FeedbackAppModel.student" Multiplicity="1" />
+          <End Role="feedback" Type="FeedbackAppModel.feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="students">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="feedback">
+              <PropertyRef Name="studentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FeedbackAppModelStoreContainer" CdmEntityContainer="FeedbackAppEntities">
+          <EntitySetMapping Name="feedbacks"><EntityTypeMapping TypeName="FeedbackAppModel.feedback"><MappingFragment StoreEntitySet="feedback">
+            <ScalarProperty Name="FID" ColumnName="FID" />
+            <ScalarProperty Name="studentID" ColumnName="studentID" />
+            <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+            <ScalarProperty Name="teacherID" ColumnName="teacherID" />
+            <ScalarProperty Name="Feedback1" ColumnName="Feedback" />
+            <ScalarProperty Name="lectureRating" ColumnName="lectureRating" />
+            <ScalarProperty Name="date" ColumnName="date" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Lecturers"><EntityTypeMapping TypeName="FeedbackAppModel.Lecturer"><MappingFragment StoreEntitySet="Lecturers">
+            <ScalarProperty Name="teacherID" ColumnName="teacherID" />
+            <ScalarProperty Name="teacherFirstName" ColumnName="teacherFirstName" />
+            <ScalarProperty Name="teacherLastName" ColumnName="teacherLastName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="modules"><EntityTypeMapping TypeName="FeedbackAppModel.module"><MappingFragment StoreEntitySet="modules">
+            <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+            <ScalarProperty Name="moduleName" ColumnName="moduleName" />
+            <ScalarProperty Name="moduleCode" ColumnName="moduleCode" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="students"><EntityTypeMapping TypeName="FeedbackAppModel.student"><MappingFragment StoreEntitySet="students">
+            <ScalarProperty Name="studentID" ColumnName="studentID" />
+            <ScalarProperty Name="studentFName" ColumnName="studentFName" />
+            <ScalarProperty Name="studentLName" ColumnName="studentLName" />
+            <ScalarProperty Name="courseID" ColumnName="courseID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="users"><EntityTypeMapping TypeName="FeedbackAppModel.user"><MappingFragment StoreEntitySet="users">
+            <ScalarProperty Name="studentID" ColumnName="studentID" />
+            <ScalarProperty Name="studentName" ColumnName="studentName" />
+            <ScalarProperty Name="password" ColumnName="password" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="FeedbModel">
+        <EntityTypeShape EntityType="FeedbackAppModel.feedback" Width="1.5" PointX="3" PointY="1" Height="2.9417936197916665" IsExpanded="true" />
+        <EntityTypeShape EntityType="FeedbackAppModel.Lecturer" Width="1.5" PointX="0.75" PointY="1.5" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="FeedbackAppModel.module" Width="1.5" PointX="0.75" PointY="5" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="FeedbackAppModel.student" Width="1.5" PointX="0.75" PointY="7.5" Height="1.9802864583333344" IsExpanded="true" />
+        <EntityTypeShape EntityType="FeedbackAppModel.user" Width="1.5" PointX="2.75" PointY="4.75" Height="1.5956835937499996" IsExpanded="true" />
+        <AssociationConnector Association="FeedbackAppModel.FK_feedback_Lecturers" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.3939925130208337" />
+          <ConnectorPoint PointX="3" PointY="2.3939925130208337" />
+        </AssociationConnector>
+        <AssociationConnector Association="FeedbackAppModel.FK_feedback_modules" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="6.5980843098958335" />
+          <ConnectorPoint PointX="4.40625" PointY="6.5980843098958335" />
+          <ConnectorPoint PointX="4.40625" PointY="3.9417936197916665" />
+        </AssociationConnector>
+        <AssociationConnector Association="FeedbackAppModel.FK_feedback_students" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="8.4901432291666676" />
+          <ConnectorPoint PointX="4.3749975" PointY="8.4901432291666676" />
+          <ConnectorPoint PointX="4.3749975" PointY="3.9417936197916665" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

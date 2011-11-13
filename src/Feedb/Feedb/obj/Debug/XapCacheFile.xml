@@ -1,0 +1,13 @@
+﻿<xapCache source="c:\users\john\FeedbackMe\src\Feedb\Feedb\Bin\Debug\Feedb.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="13/11/2011 08:51:51">
+  <file source="c:\users\john\FeedbackMe\src\Feedb\Feedb\obj\Debug\Feedb.dll" archivePath="Feedb.dll" lastWriteTime="13/11/2011 08:51:50" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll" archivePath="System.ComponentModel.DataAnnotations.dll" lastWriteTime="09/03/2011 23:08:16" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\RIA Services\v1.0\Libraries\Silverlight\System.ServiceModel.DomainServices.Client.dll" archivePath="System.ServiceModel.DomainServices.Client.dll" lastWriteTime="14/01/2011 13:13:36" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\RIA Services\v1.0\Libraries\Silverlight\System.ServiceModel.DomainServices.Client.Web.dll" archivePath="System.ServiceModel.DomainServices.Client.Web.dll" lastWriteTime="14/01/2011 13:13:32" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ServiceModel.Web.Extensions.dll" archivePath="System.ServiceModel.Web.Extensions.dll" lastWriteTime="09/03/2011 23:08:16" />
+  <file source="c:\users\john\FeedbackMe\src\Feedb\Feedb\Libs\System.Windows.Controls.Data.DataForm.Toolkit.dll" archivePath="System.Windows.Controls.Data.DataForm.Toolkit.dll" lastWriteTime="13/11/2011 08:41:49" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Data.Input.dll" archivePath="System.Windows.Controls.Data.Input.dll" lastWriteTime="09/03/2011 23:08:16" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.dll" archivePath="System.Windows.Controls.dll" lastWriteTime="09/03/2011 23:08:16" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Navigation.dll" archivePath="System.Windows.Controls.Navigation.dll" lastWriteTime="09/03/2011 23:08:16" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Data.dll" archivePath="System.Windows.Data.dll" lastWriteTime="09/03/2011 23:08:16" />
+  <file source="c:\users\john\FeedbackMe\src\Feedb\Feedb\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="13/11/2011 08:44:24" />
+</xapCache>

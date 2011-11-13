@@ -1,0 +1,27 @@
+﻿<navigation:Page x:Class="Feedb.Views.Report" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           mc:Ignorable="d"
+           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+           d:DesignWidth="1024" d:DesignHeight="768"
+           Title="Report Page">
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Order By" Margin="10,3,10,0" Width="55"/>
+            <ComboBox Name="sBox" Width="120" Margin="0,0,10,0" SelectedIndex="0">
+                <ComboBoxItem Content="Date"/>
+                <ComboBoxItem Content="Module Name"/>
+                <ComboBoxItem Content="Rating"/>
+                <ComboBoxItem Content="Teacher"/>
+            </ComboBox>
+            <TextBox Name="query" Width="150" Text="Date" />
+            <Button Content="Go" Name="qBtn" Click="qBtn_Click" Margin="10,0,0,0"/>
+        </StackPanel>
+    </Grid>
+</navigation:Page>
